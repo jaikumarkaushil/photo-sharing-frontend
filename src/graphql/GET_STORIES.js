@@ -2,10 +2,10 @@ import { gql } from "@apollo/client";
 
 const GET_STORIES = gql`
     query GetStories {
-        stories {
-            id
+        getStories {
+            _id
             username
-            image
+            profileImage
         }
     }
 `;

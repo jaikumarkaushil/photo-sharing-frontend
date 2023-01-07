@@ -2,7 +2,10 @@ import { gql } from "@apollo/client";
 
 const UNLIKE = gql`
     mutation UnlikeMutation($post_id: ID!) {
-        unlike(post_id: $post_id)
+        deleteLike(idPost: $post_id) {
+            message
+            success
+        }
     }
 `;
 

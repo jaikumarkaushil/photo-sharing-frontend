@@ -17,11 +17,18 @@ const GET_CURRENT_USER = gql`
         imageURL
         likes
         postLikes {
-          _id
-          idPost
-          createdAt
-          updatedAt
-        }
+        _id
+        idPost
+        createdAt
+        updatedAt
+      }
+      comments {
+        _id
+        idPost
+        comment
+        createdAt
+        updatedAt
+      }
         createdAt
         updatedAt
       }

@@ -1,4 +1,4 @@
-import React, {Suspense} from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom";
 import { Loading } from "./components/Loading";
 import { BrowserRouter } from "react-router-dom";
@@ -40,9 +40,9 @@ ReactDOM.render(
     <React.StrictMode>
         <BrowserRouter>
             <ApolloProvider client={client}>
-            <Suspense fallback={<Loading/>}>
-                <App />
-            </Suspense>
+                <Suspense fallback={<Loading />}>
+                    <App />
+                </Suspense>
             </ApolloProvider>
         </BrowserRouter>
     </React.StrictMode>,
