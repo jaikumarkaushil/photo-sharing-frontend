@@ -28,7 +28,7 @@ export default function ModalPost(props) {
                                 </a>
                             </div>
                             <div className="">
-                                <a className="" className="" href="">
+                                <a className="" href="">
                                     <FontAwesomeIcon icon="ellipsis" />
                                 </a>
                             </div>

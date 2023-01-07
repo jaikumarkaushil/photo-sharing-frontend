@@ -21,7 +21,8 @@ export default function Login(props) {
 
         try {
             const { data } = await login();
-            localStorage.setItem("token", data.login);
+            localStorage.setItem("token", data.authUser.token);
+
             navigate("/");
         } catch (e) {
             setError(e);
@@ -32,11 +33,11 @@ export default function Login(props) {
         <div className="h-screen bg-gray-50 flex flex-col justify-center items-center">
             <div className="flex flex-column">
                 <div className="pr-10 hidden md:block">
-                    <img src="/images/iphone-instagram.png" width="300" />
+                    <img src="/images/react-insta.jpg" width="300" alt="phone-img" />
                 </div>
                 <div>
                     <div className="bg-white border border-gray-300 w-80 pt-10 pb-60 flex items-center flex-col mb-3 relative">
-                        <img src="/images/logo-instagram.svg" width="200" />
+                        <img src="/images/JaiInsta-logo.png" width="200" height="100" alt="logo-img" />
                         <form
                             className="mt-8 w-64 flex flex-col"
                             onSubmit={handleSubmit}
@@ -44,7 +45,7 @@ export default function Login(props) {
                             <input
                                 autoFocus
                                 className="text-xs w-full mb-2 rounded border bg-gray-100 border-gray-300 px-2 py-2 focus:outline-none focus:border-gray-400 active:outline-none"
-                                placeholder="Phone number, username, or email"
+                                placeholder="Email"
                                 type="text"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
@@ -61,7 +62,7 @@ export default function Login(props) {
                                 type="submit"
                                 className="text-sm text-center bg-blue-300 text-white py-1 rounded font-medium"
                             >
-                                Log In
+                                Sign In
                             </button>
                         </form>
                         <div
@@ -69,13 +70,12 @@ export default function Login(props) {
                                 error ? "" : "hidden"
                             }`}
                         >
-                            Sorry, your email/password was incorrect. Please
-                            double-check and try again.
+                            You have entered wrong credentials. Please try again!
                         </div>
                     </div>
                     <div className="bg-white border border-gray-300 text-center w-80 py-4">
                         <span className="text-sm">Don't have an account?</span>
-                        <a className="text-blue-500 text-sm font-semibold ml-1 cursor-pointer">
+                        <a href="home" className="text-blue-500 text-sm font-semibold ml-1 cursor-pointer">
                             Sign up
                         </a>
                     </div>

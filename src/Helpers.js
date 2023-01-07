@@ -7,9 +7,9 @@ export const getImageUrl = (imagePath) => {
 export const signOut = async (client, navigate, logout) => {
     try {
         await logout();
-        localStorage.removeItem("token");
-        client.clearStore();
-        navigate("/accounts/login");
+        localStorage.removeItem("token"); // remove user token when user logs out of the system
+        client.clearStore(); // also clear the stored data of user
+        navigate("/accounts/login"); // redirect the user when user logs out
     } catch (error) {
         console.log("error:", error);
     }

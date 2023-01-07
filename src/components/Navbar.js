@@ -30,7 +30,14 @@ export default function Navbar(props) {
     });
 
     const [files, setFiles] = useState([]);
-    const { loading: loadingUser, error, data } = useQuery(GET_CURRENT_USER);
+    // const { loading: loadingUser, error, data } = useQuery(GET_CURRENT_USER);
+    const data = {
+        me: {
+            id: '6397eea298bd108ae779eed1',
+            username: "Jaik1019",
+            image: "https://media.istockphoto.com/id/1309328823/photo/headshot-portrait-of-smiling-male-employee-in-office.jpg?b=1&s=170667a&w=0&k=20&c=MRMqc79PuLmQfxJ99fTfGqHL07EDHqHLWg0Tb4rPXQc="
+        }
+    }
     const [logout] = useMutation(LOGOUT);
     const client = useApolloClient();
     const [addPost] = useMutation(ADD_POST, {
@@ -38,13 +45,13 @@ export default function Navbar(props) {
     });
     const navigate = useNavigate();
 
-    if (loadingUser) {
-        return <Spinner />;
-    }
+    // if (loadingUser) {
+    //     return <Spinner />;
+    // }
 
-    if (error) {
-        return "Error...";
-    }
+    // if (error) {
+    //     return "Error...";
+    // }
 
     const openNewPostModal = () => {
         setFiles([]);
@@ -114,14 +121,16 @@ export default function Navbar(props) {
                 )}
             </Modal>
             <nav className="sticky top-0 min-h-fit bg-white w-full border border-b-1 z-50">
+                {console.log(data)}
                 <div className="container max-w-5xl">
                     <div className="flex flex-row py-1 items-center">
                         <div className="basis-1/2 pl-3 lg:p-0">
                             <Link to="/">
                                 <img
                                     className=""
-                                    src="/images/logo-instagram.svg"
+                                    src="/images/JaiInsta-logo.png"
                                     width="120"
+                                    alt="JaiInsta-logo"
                                 />
                             </Link>
                         </div>
@@ -147,26 +156,12 @@ export default function Navbar(props) {
                                     </Link>
                                 </li>
                                 <li>
-                                    <a href="">
-                                        <FontAwesomeIcon
-                                            icon={["far", "comment-dots"]}
-                                        />
-                                    </a>
-                                </li>
-                                <li>
                                     <a
                                         className="cursor-pointer"
                                         onClick={() => openNewPostModal()}
                                     >
                                         <FontAwesomeIcon
                                             icon={["far", "square-plus"]}
-                                        />
-                                    </a>
-                                </li>
-                                <li>
-                                    <a className="cursor-pointer">
-                                        <FontAwesomeIcon
-                                            icon={["far", "compass"]}
                                         />
                                     </a>
                                 </li>

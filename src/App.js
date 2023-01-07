@@ -10,7 +10,7 @@ import { fab } from "@fortawesome/free-brands-svg-icons";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
 import Navbar from "./components/Navbar";
-import ProtectedRoute from "./components/ProtectedRoute";
+import UserSafeRedirect from "./components/UserSafeRedirect";
 import ModalSettings from "./components/ModalSettings";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -24,24 +24,24 @@ export default function App() {
 
     return (
         <>
-            <Routes>
-                <Route path="/accounts/login" exact element={<Login />} />
+            <Routes>    
+                <Route path="/accounts/login" exact element={<Login/>} />
                 <Route
                     path="/"
                     exact
                     element={
-                        <ProtectedRoute>
+                        <UserSafeRedirect>
                             <Navbar />
                             <div className="container pt-8 max-w-5xl">
                                 <Home />
                             </div>
-                        </ProtectedRoute>
+                        </UserSafeRedirect>
                     }
                 />
                 <Route
                     path="/:username"
                     element={
-                        <ProtectedRoute>
+                        <UserSafeRedirect>
                             <Navbar />
                             <div className="container pt-8 max-w-5xl">
                                 <Profile
@@ -50,18 +50,18 @@ export default function App() {
                                     }
                                 />
                             </div>
-                        </ProtectedRoute>
+                        </UserSafeRedirect>
                     }
                 />
                 <Route
                     path="/accounts"
                     element={
-                        <ProtectedRoute>
+                        <UserSafeRedirect>
                             <Navbar />
                             <div className="container pt-8 max-w-5xl">
                                 <Settings />
                             </div>
-                        </ProtectedRoute>
+                        </UserSafeRedirect>
                     }
                 >
                     <Route index element={<Navigate to="edit" replace />} />

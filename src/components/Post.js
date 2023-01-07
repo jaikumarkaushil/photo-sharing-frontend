@@ -73,16 +73,16 @@ function Post(props) {
         setLoading(true);
 
         try {
-            await addComment({
-                variables: { post_id: id, comment },
-                refetchQueries: [
-                    {
-                        query: GET_FEED,
-                    },
-                ],
-            });
+            // await addComment({
+            //     variables: { post_id: id, comment },
+            //     refetchQueries: [
+            //         {
+            //             query: GET_FEED,
+            //         },
+            //     ],
+            // });
 
-            setLoading(false);
+            // setLoading(false);
             setComment("");
         } catch (error) {
             console.log("error:", error);
@@ -124,7 +124,7 @@ function Post(props) {
                 <img
                     className="w-100"
                     alt={`Photo by ${username}`}
-                    src={getImageUrl(image)}
+                    src={image}
                 />
 
                 <div className="header p-3 flex flex-row text-2xl">

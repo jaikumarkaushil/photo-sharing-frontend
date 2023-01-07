@@ -21,12 +21,12 @@ export default function PostPreview(props) {
             <div className="w-1/4">
                 <div className="p-3 border-b">
                     <a href="" className="">
-                        <img
+                        {/* <img
                             className="rounded-full w-8 max-w-none inline"
                             src={user.image}
-                        />{" "}
+                        />{" "} */}
                         <span className="font-medium text-sm ml-2">
-                            {user.name}
+                            {user.username}
                         </span>
                     </a>
                     <textarea
