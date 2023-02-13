@@ -40,14 +40,14 @@ export default function Profile(props) {
                     <div className="bg-green p-3 rounded flex items-start justify-center">
                         <img
                             className="rounded-full"
-                            src={data.me.image}
+                            src={data.me.profileImage}
                             width="150"
                         />
                     </div>
                     <div className="bg-green p-3 rounded text-gray-600 col-span-2">
                         <div className="flex items-center">
                             <h1 className="inline-block text-3xl align-bottom block">
-                                {data.me.username}
+                                {data.me.userName}
                             </h1>
                             <Link
                                 as="button"
@@ -70,17 +70,17 @@ export default function Profile(props) {
                         </div>
                         <div className="flex-row py-5 max-w-sm hidden lg:flex">
                             <div className="basis-1/2 ">
-                                <strong>{data.me.total_posts}</strong> posts
+                                <strong>{data.me.totalPosts}</strong> posts
                             </div>
                             <div className="basis-1/2">
                                 <strong className="mr-1">
-                                    {data.me.total_followers}
+                                    {data.me.totalFollowers}
                                 </strong>
                                 followers
                             </div>
                             <div className="basis-1/2">
                                 <strong className="mr-1">
-                                    {data.me.total_following}
+                                    {data.me.totalFollowing}
                                 </strong>
                                 following
                             </div>
@@ -102,19 +102,19 @@ export default function Profile(props) {
                 <ul className="flex flex-row p-2 text-sm items-center	justify-center border-t text-gray-400 h-16 lg:hidden">
                     <li className="flex-1 text-center">
                         <b className="text-black block">
-                            {data.me.total_posts}
+                            {data.me.totalPosts}
                         </b>{" "}
                         posts
                     </li>
                     <li className="flex-1 text-center">
                         <b className="text-black block">
-                            {data.me.total_followers}
+                            {data.me.totalFollowers}
                         </b>
                         followers
                     </li>
                     <li className="flex-1 text-center">
                         <b className="text-black block">
-                            {data.me.total_following}
+                            {data.me.totalFollowing}
                         </b>
                         following
                     </li>
@@ -122,11 +122,10 @@ export default function Profile(props) {
 
                 <div className="flex flex-row text-2xl lg:text-xs items-center justify-center border-t uppercase text-gray-400 tracking-widest h-16">
                     <a
-                        className={`${
-                            activeTab === "posts"
-                                ? "text-black border-t border-black"
-                                : ""
-                        } flex justify-center items-center h-full mr-16 cursor-pointer`}
+                        className={`${activeTab === "posts"
+                            ? "text-black border-t border-black"
+                            : ""
+                            } flex justify-center items-center h-full mr-16 cursor-pointer`}
                         onClick={() => setActiveTab("posts")}
                     >
                         <FontAwesomeIcon icon="table-cells" />
@@ -135,11 +134,10 @@ export default function Profile(props) {
                         </span>
                     </a>
                     <a
-                        className={`${
-                            activeTab === "reels"
-                                ? "text-black border-t border-black"
-                                : ""
-                        } flex justify-center items-center h-full mr-16 cursor-pointer`}
+                        className={`${activeTab === "reels"
+                            ? "text-black border-t border-black"
+                            : ""
+                            } flex justify-center items-center h-full mr-16 cursor-pointer`}
                         onClick={() => setActiveTab("reels")}
                     >
                         <FontAwesomeIcon icon="play" />
@@ -148,11 +146,10 @@ export default function Profile(props) {
                         </span>
                     </a>
                     <a
-                        className={`${
-                            activeTab === "videos"
-                                ? "text-black border-t border-black"
-                                : ""
-                        } flex justify-center items-center h-full mr-16 cursor-pointer`}
+                        className={`${activeTab === "videos"
+                            ? "text-black border-t border-black"
+                            : ""
+                            } flex justify-center items-center h-full mr-16 cursor-pointer`}
                         onClick={() => setActiveTab("videos")}
                     >
                         <FontAwesomeIcon icon={["far", "circle-play"]} />
@@ -161,11 +158,10 @@ export default function Profile(props) {
                         </span>
                     </a>
                     <a
-                        className={`${
-                            activeTab === "saved"
-                                ? "text-black border-t border-black"
-                                : ""
-                        } flex justify-center items-center h-full mr-16 cursor-pointer`}
+                        className={`${activeTab === "saved"
+                            ? "text-black border-t border-black"
+                            : ""
+                            } flex justify-center items-center h-full mr-16 cursor-pointer`}
                         onClick={() => setActiveTab("saved")}
                     >
                         <FontAwesomeIcon icon={["far", "bookmark"]} />
@@ -174,11 +170,10 @@ export default function Profile(props) {
                         </span>
                     </a>
                     <a
-                        className={`${
-                            activeTab === "tagged"
-                                ? "text-black border-t border-black"
-                                : ""
-                        } flex justify-center items-center h-full mr-16 cursor-pointer`}
+                        className={`${activeTab === "tagged"
+                            ? "text-black border-t border-black"
+                            : ""
+                            } flex justify-center items-center h-full mr-16 cursor-pointer`}
                         onClick={() => setActiveTab("tagged")}
                     >
                         <FontAwesomeIcon icon="user-tag" />

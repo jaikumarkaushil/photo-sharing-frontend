@@ -30,28 +30,28 @@ export default function Navbar(props) {
     });
 
     const [files, setFiles] = useState([]);
-    // const { loading: loadingUser, error, data } = useQuery(GET_CURRENT_USER);
-    const data = {
-        me: {
-            id: '6397eea298bd108ae779eed1',
-            username: "Jaik1019",
-            image: "https://media.istockphoto.com/id/1309328823/photo/headshot-portrait-of-smiling-male-employee-in-office.jpg?b=1&s=170667a&w=0&k=20&c=MRMqc79PuLmQfxJ99fTfGqHL07EDHqHLWg0Tb4rPXQc="
-        }
-    }
+    const { loading: loadingUser, error, data } = useQuery(GET_CURRENT_USER);
+    // const data = {
+    //     me: {
+    //         id: '6397eea298bd108ae779eed1',
+    //         username: "Jaik1019",
+    //         image: "https://media.istockphoto.com/id/1309328823/photo/headshot-portrait-of-smiling-male-employee-in-office.jpg?b=1&s=170667a&w=0&k=20&c=MRMqc79PuLmQfxJ99fTfGqHL07EDHqHLWg0Tb4rPXQc="
+    //     }
+    // }
     const [logout] = useMutation(LOGOUT);
     const client = useApolloClient();
-    const [addPost] = useMutation(ADD_POST, {
+    const [uploadPost] = useMutation(ADD_POST, {
         onCompleted: (data) => console.log(data),
     });
     const navigate = useNavigate();
 
-    // if (loadingUser) {
-    //     return <Spinner />;
-    // }
+    if (loadingUser) {
+        return <Spinner />;
+    }
 
-    // if (error) {
-    //     return "Error...";
-    // }
+    if (error) {
+        return "Error...";
+    }
 
     const openNewPostModal = () => {
         setFiles([]);
@@ -63,16 +63,15 @@ export default function Navbar(props) {
     };
 
     const share = () => {
-        addPost({
+        uploadPost({
             variables: {
-                user_id: data.me.id,
-                caption: caption,
                 file: files[0],
+                caption: caption,
             },
             refetchQueries: [{ query: GET_CURRENT_USER }],
         });
         setIsNewPostModalOpen(false);
-        navigate(`/${data.me.username}`);
+        navigate(`/${data.me.userName}`);
     };
 
     const isFileDropped = () => {
@@ -97,9 +96,8 @@ export default function Navbar(props) {
                         <input {...getInputProps()} />
                         <FontAwesomeIcon
                             icon={"photo-film"}
-                            className={`text-7xl ${
-                                isDragActive ? "text-sky-500" : ""
-                            }`}
+                            className={`text-7xl ${isDragActive ? "text-sky-500" : ""
+                                }`}
                         />
                         <h2 className="py-3 text-2xl font-light">
                             {" "}
@@ -121,7 +119,6 @@ export default function Navbar(props) {
                 )}
             </Modal>
             <nav className="sticky top-0 min-h-fit bg-white w-full border border-b-1 z-50">
-                {console.log(data)}
                 <div className="container max-w-5xl">
                     <div className="flex flex-row py-1 items-center">
                         <div className="basis-1/2 pl-3 lg:p-0">
@@ -129,7 +126,7 @@ export default function Navbar(props) {
                                 <img
                                     className=""
                                     src="/images/JaiInsta-logo.png"
-                                    width="120"
+                                    width="180"
                                     alt="JaiInsta-logo"
                                 />
                             </Link>
@@ -156,12 +153,26 @@ export default function Navbar(props) {
                                     </Link>
                                 </li>
                                 <li>
+                                    <a>
+                                        <FontAwesomeIcon
+                                            icon={["far", "comment-dots"]}
+                                        />
+                                    </a>
+                                </li>
+                                <li>
                                     <a
                                         className="cursor-pointer"
                                         onClick={() => openNewPostModal()}
                                     >
                                         <FontAwesomeIcon
                                             icon={["far", "square-plus"]}
+                                        />
+                                    </a>
+                                </li>
+                                <li>
+                                    <a className="cursor-pointer">
+                                        <FontAwesomeIcon
+                                            icon={["far", "compass"]}
                                         />
                                     </a>
                                 </li>
@@ -181,8 +192,9 @@ export default function Navbar(props) {
                                             <Menu.Button className="inline-block w-8 h-8 justify-center bg-white text-sm font-medium text-gray-700">
                                                 <img
                                                     className="rounded-full"
-                                                    src={data.me.image}
-                                                    width="24"
+                                                    src={data.me.profileImage}
+                                                    width="32"
+                                                    alt="profile"
                                                 />
                                             </Menu.Button>
                                         </div>
@@ -201,7 +213,7 @@ export default function Navbar(props) {
                                                     <Menu.Item>
                                                         {({ active }) => (
                                                             <Link
-                                                                to={`/${data.me.username}`}
+                                                                to={`/${data.me.userName}`}
                                                                 className={classNames(
                                                                     active
                                                                         ? "bg-gray-100 text-gray-900"

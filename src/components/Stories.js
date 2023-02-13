@@ -61,20 +61,20 @@ export default function Stories(props) {
                 {...settings}
                 ref={sliderRef}
             >
-                {data.stories.map((story) => (
-                    <div key={story.id}>
+                {data.getStories.map((story) => (
+                    <div key={story._id}>
                         <div className="flex flex-col items-center space-y-1">
                             <div className="bg-gradient-to-tr from-yellow-400 to-purple-600 p-0.5 rounded-full">
                                 <a className="block bg-white p-0.5 rounded-full cursor-pointer">
                                     <img
                                         className="rounded-full w-16 h-16"
-                                        src={story.image}
+                                        src={story.profileImage}
                                     />
                                 </a>
                             </div>
                             <a className="cursor-pointer">
                                 <div className="text-xs text-center overflow-hidden text-ellipsis w-20">
-                                    {story.username}
+                                    {story.userName}
                                 </div>
                             </a>
                         </div>

@@ -6,8 +6,9 @@ import LIKE from "../graphql/LIKE";
 import UNLIKE from "../graphql/UNLIKE";
 import GET_FEED from "../graphql/GET_FEED";
 import ADD_COMMENT from "../graphql/ADD_COMMENT";
-import { getImageUrl, isLikedByUser } from "../Helpers";
+import { isLikedByUser } from "../Helpers";
 import ModalPost from "../components/ModalPost";
+import moment from "moment/moment";
 
 const MAX_COMMENTS = 3;
 
@@ -31,14 +32,14 @@ function Post(props) {
     const [isPostModalOpen, setPostModalOpen] = useState(false);
     const [comment, setComment] = useState("");
     const [loading, setLoading] = useState(false);
-    const [like] = useMutation(LIKE);
+    const [addLike] = useMutation(LIKE);
     const [unlike] = useMutation(UNLIKE);
     const [addComment] = useMutation(ADD_COMMENT);
 
     const likePost = async (id) => {
         try {
-            await like({
-                variables: { post_id: id },
+            await addLike({
+                variables: { idPost: id },
                 refetchQueries: [
                     {
                         query: GET_FEED,
@@ -53,7 +54,7 @@ function Post(props) {
     const unlikePost = async (id) => {
         try {
             await unlike({
-                variables: { post_id: id },
+                variables: { idPost: id },
                 refetchQueries: [
                     {
                         query: GET_FEED,
@@ -73,16 +74,16 @@ function Post(props) {
         setLoading(true);
 
         try {
-            // await addComment({
-            //     variables: { post_id: id, comment },
-            //     refetchQueries: [
-            //         {
-            //             query: GET_FEED,
-            //         },
-            //     ],
-            // });
+            await addComment({
+                variables: { idPost: id, comment },
+                refetchQueries: [
+                    {
+                        query: GET_FEED,
+                    },
+                ],
+            });
 
-            // setLoading(false);
+            setLoading(false);
             setComment("");
         } catch (error) {
             console.log("error:", error);
@@ -101,40 +102,40 @@ function Post(props) {
             <div className="border border-slate-200 mb-5">
                 <div className="p-3 flex flex-row">
                     <div className="flex-1">
-                        <a href="" className="">
+                        <span className="">
                             <img
                                 className="rounded-full w-8 max-w-none inline"
                                 src={userImage}
+                                alt="User Img"
                             />{" "}
                             <span className="font-medium text-sm ml-2">
                                 {username}
                             </span>
-                        </a>
+                        </span>
                     </div>
                     <div className="">
-                        <a
+                        <span
                             className=""
                             href="#"
                             onClick={() => setIsModalOpen(true)}
                         >
                             <FontAwesomeIcon icon="ellipsis" />
-                        </a>
+                        </span>
                     </div>
                 </div>
                 <img
                     className="w-100"
-                    alt={`Photo by ${username}`}
+                    alt={`Uploaded by ${username}`}
                     src={image}
                 />
 
                 <div className="header p-3 flex flex-row text-2xl">
                     <div className="flex-1 ">
-                        <a
-                            className={`mr-3 cursor-pointer  ${
-                                isLikedByUser(currentUserId, postLikes)
-                                    ? "text-red-600"
-                                    : "hover:text-gray-500"
-                            }`}
+                        <span
+                            className={`mr-3 cursor-pointer  ${isLikedByUser(currentUserId, postLikes)
+                                ? "text-red-600"
+                                : "hover:text-gray-500"
+                                }`}
                             onClick={() =>
                                 isLikedByUser(currentUserId, postLikes)
                                     ? unlikePost(id)
@@ -149,19 +150,19 @@ function Post(props) {
                                     "heart",
                                 ]}
                             />
-                        </a>
-                        <a
+                        </span>
+                        <span
                             className="mr-3 hover:text-gray-500 cursor-pointer"
                             onClick={() => setPostModalOpen(true)}
                         >
                             <FontAwesomeIcon icon={["far", "comment"]} />
-                        </a>
-                        <a className="hover:text-gray-500 cursor-pointer">
+                        </span>
+                        <span className="hover:text-gray-500 cursor-pointer">
                             <FontAwesomeIcon icon={["far", "paper-plane"]} />
-                        </a>
+                        </span>
                     </div>
                     <div className="">
-                        <a
+                        <span
                             className="cursor-pointer hover:text-gray-500"
                             onClick={() => setIsBookmarked(!isBookmarked)}
                         >
@@ -171,63 +172,62 @@ function Post(props) {
                                     "bookmark",
                                 ]}
                             />
-                        </a>
+                        </span>
                     </div>
                 </div>
                 <div className="font-medium text-sm px-3">{likes} likes</div>
-                <div className="px-3 text-sm">
-                    <span className="font-medium">{username}</span> {caption}
-                </div>
+                {caption && (
+                    <div className="px-3 text-sm">
+                        <span className="font-medium">{username}</span> {caption}
+                    </div>
+                )}
                 {comments.length && comments.length > MAX_COMMENTS ? (
-                    <a
+                    <span
                         className="block text-gray-500 px-3 py-2 text-sm cursor-pointer"
                         onClick={() => setPostModalOpen(true)}
                     >
                         View all {comments.length} comments
-                    </a>
+                    </span>
                 ) : (
                     ""
                 )}
 
                 {comments.length
                     ? comments
-                          .slice(MAX_COMMENTS * -1)
-                          .map((comment, index) => (
-                              <div
-                                  key={comment.id}
-                                  className={`px-3 ${
-                                      index !== 0 ? "pt-2" : ""
-                                  } text-sm`}
-                              >
-                                  <span className="font-medium">
-                                      {comment.user.username}
-                                  </span>{" "}
-                                  {comment.comment}
-                                  <a
-                                      className={`block float-right text-xs cursor-pointer ${
-                                          comment.is_liked ? "text-red-600" : ""
-                                      }`}
-                                  >
-                                      <FontAwesomeIcon
-                                          icon={[
-                                              comment.is_liked ? "fas" : "far",
-                                              "heart",
-                                          ]}
-                                      />
-                                  </a>
-                              </div>
-                          ))
+                        .slice(MAX_COMMENTS * -1)
+                        .map((comment, index) => (
+                            <div
+                                key={comment._id}
+                                className={`px-3 ${index !== 0 ? "pt-2" : ""
+                                    } text-sm`}
+                            >
+                                <span className="font-medium">
+                                    {comment.userName}
+                                </span>{" "}
+                                {comment.comment}
+                                <span
+                                    className={`block float-right text-xs cursor-pointer ${comment.isLiked ? "text-red-600" : ""
+                                        }`}
+                                >
+                                    <FontAwesomeIcon
+                                        icon={[
+                                            comment.isLiked ? "fas" : "far",
+                                            "heart",
+                                        ]}
+                                    />
+                                </span>
+                            </div>
+                        ))
                     : ""}
 
-                <div className="text-gray-500 uppercase px-3 pt-2 pb-5 text-[0.65rem] tracking-wide">
-                    {created_time_ago}
+                <div className="text-gray-500 px-3 pt-2 pb-5 text-[0.65rem] tracking-wide">
+                    {moment(created_time_ago).fromNow()}
                 </div>
 
                 <div className="px-3 py-2 flex flex-row border-t relative">
                     <div
-                        className={`absolute top-0 left-0 h-full w-full text-center pt-3 ${
-                            loading ? "block" : "hidden"
-                        }`}
+                        className={`absolute top-0 left-0 h-full w-full text-center pt-3 ${loading ? "block" : "hidden"
+                            }`}
                     >
                         <FontAwesomeIcon
                             className={`fa-spin text-gray-400 text-2xl`}
@@ -235,9 +235,9 @@ function Post(props) {
                         />
                     </div>
                     <div className="flex items-center">
-                        <a className="text-2xl cursor-pointer">
+                        <span className="text-2xl cursor-pointer">
                             <FontAwesomeIcon icon={["far", "face-smile"]} />
-                        </a>
+                        </span>
                     </div>
                     <div className="flex-1 pr-3 py-1">
                         <input
@@ -250,16 +250,15 @@ function Post(props) {
                         />
                     </div>
                     <div className="flex items-center text-sm">
-                        <a
-                            className={` font-medium ${
-                                comment
-                                    ? "cursor-pointer text-sky-500"
-                                    : "text-sky-200"
-                            }`}
+                        <span
+                            className={` font-medium ${comment
+                                ? "cursor-pointer text-sky-500"
+                                : "text-sky-200"
+                                }`}
                             onClick={() => createComment()}
                         >
                             Post
-                        </a>
+                        </span>
                     </div>
                 </div>
             </div>

@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 const FOLLOW = gql`
-    mutation FollowMutation($user_id: ID!) {
-        followUser(id: $user_id) {
+    mutation FollowMutation($idUser: ID!) {
+        followUser(id: $idUser) {
             message
             success
         }

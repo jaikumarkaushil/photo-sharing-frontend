@@ -19,13 +19,13 @@ export default function ChangePassword() {
                     <a className="float-right mr-5" href="">
                         <img
                             className="rounded-full"
-                            src={data.me.image}
+                            src={data.me.profileImage}
                             width="40"
                         />
                     </a>
                 </div>
                 <div className="flex items-center">
-                    <h1 className="text-2xl">{data.me.username}</h1>
+                    <h1 className="text-2xl">{data.me.userName}</h1>
                 </div>
             </div>
             <div className="flex flex-row mt-5 items-center">

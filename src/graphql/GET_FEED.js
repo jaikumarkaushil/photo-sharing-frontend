@@ -4,7 +4,7 @@ const GET_FEED = gql`
   query getFeed {
     getAllPosts {
         _id
-        idUser {
+        user {
             _id
             fullName
             userName
@@ -17,7 +17,7 @@ const GET_FEED = gql`
         imageURL
         likes
         postLikes {
-            _id
+            idUser
             idPost
             createdAt
             updatedAt
@@ -25,6 +25,10 @@ const GET_FEED = gql`
         comments {
             _id
             idPost
+            idUser
+            userName
+            userImage
+            isLiked
             comment
             createdAt
             updatedAt

@@ -4,7 +4,7 @@ const GET_STORIES = gql`
     query GetStories {
         getStories {
             _id
-            username
+            userName
             profileImage
         }
     }

@@ -21,7 +21,7 @@ export default function Follow(props) {
 
         try {
             const response = await follow({
-                variables: { user_id: user.id, follower_id: data.me.id },
+                variables: { idUser: user.id, follower_id: data.me._id },
             });
 
             setLoading(false);
@@ -36,9 +36,8 @@ export default function Follow(props) {
     return (
         <>
             <FontAwesomeIcon
-                className={`fa-spin text-gray-400 text-lg ${
-                    loading ? "" : "hidden"
-                }`}
+                className={`fa-spin text-gray-400 text-lg ${loading ? "" : "hidden"
+                    }`}
                 icon={["fas", "spinner"]}
             />
 

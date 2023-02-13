@@ -14,6 +14,8 @@ import { setContext } from "@apollo/client/link/context";
 import { createUploadLink } from "apollo-upload-client";
 const App = React.lazy(() => import('./App'));
 
+console.log(process.env.REACT_APP_BACKEND_URL);
+
 const httpLink = createUploadLink({
     uri: process.env.REACT_APP_BACKEND_URL,
 });
@@ -25,15 +27,33 @@ const authLink = setContext((_, { headers }) => {
     return {
         headers: {
             ...headers,
-            authorization: token ? `Bearer ${token}` : "",
+            authorization: token ? `Bearer ${token}` : ""
         },
     };
 });
 
+const cache = new InMemoryCache({
+    typePolicies: {
+        Query: {
+            fields: {
+                clients: {
+                    merge(existing, incoming) {
+                        return incoming;
+                    }
+                },
+                projects: {
+                    merge(existing, incoming) {
+                        return incoming;
+                    }
+                }
+            }
+        }
+    }
+});
+
 const client = new ApolloClient({
-    connectToDevTools: true,
     link: authLink.concat(httpLink),
-    cache: new InMemoryCache(),
+    cache,
 });
 
 ReactDOM.render(

@@ -14,117 +14,43 @@ import Footer from "../components/Footer";
 
 export default function Home(props) {
     const navigate = useNavigate();
-    // const { loading, error, data } = useQuery(GET_FEED);
-    // const {
-    //     loading: loadingCurrentUser,
-    //     error: errorCurrentUser,
-    //     data: dataCurrentUser,
-    // } = useQuery(GET_CURRENT_USER);
-    const data = {
-        feed: [
-            {
-                id: "67642j",
-                caption: "Good Vibe near sea",
-                user: {
-                    image: "https://media.istockphoto.com/id/1309328823/photo/headshot-portrait-of-smiling-male-employee-in-office.jpg?b=1&s=170667a&w=0&k=20&c=MRMqc79PuLmQfxJ99fTfGqHL07EDHqHLWg0Tb4rPXQc=",
-                    username: "Jaik1019",
-                },
-                image: "https://images.unsplash.com/photo-1591178675678-1e76fbc255ab?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2232&q=80",
-                likes: 10,
-                created_at: "12-12-2022",
-                comments: [
-                    {
-                        id: 1,
-                        user: {
-                            image: "https://media.istockphoto.com/id/1309328823/photo/headshot-portrait-of-smiling-male-employee-in-office.jpg?b=1&s=170667a&w=0&k=20&c=MRMqc79PuLmQfxJ99fTfGqHL07EDHqHLWg0Tb4rPXQc=",
-                            username: "Ramesh",
-                        },
-                        comment: "Total vibe check 🕺🏻🕺🏻🕺🏻❄️😂🙌🏻",
-                        isLiked: true
-                    },
-                    {
-                        id: 2,
-                        user: {
-                            image: "https://media.istockphoto.com/id/1309328823/photo/headshot-portrait-of-smiling-male-employee-in-office.jpg?b=1&s=170667a&w=0&k=20&c=MRMqc79PuLmQfxJ99fTfGqHL07EDHqHLWg0Tb4rPXQc=",
-                            username: "Jaik1013",
-                        },
-                        comment: "Living your life to the fullest 😍❤️",
-                        isLiked: true
-                    }
-                ],
-                postLikes: []
+    const { loading, error, data } = useQuery(GET_FEED);
+    const {
+        loading: loadingCurrentUser,
+        error: errorCurrentUser,
+        data: dataCurrentUser,
+    } = useQuery(GET_CURRENT_USER);
 
-            },
-            {
-                id: "67642r",
-                caption: "No other time suits me",
-                image: "https://images.unsplash.com/photo-1507539989371-99615e449486?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1262&q=80",
-                user: {
-                    id: '6397eea298bd108ae779eed1',
-                    image: "https://media.istockphoto.com/id/1309328823/photo/headshot-portrait-of-smiling-male-employee-in-office.jpg?b=1&s=170667a&w=0&k=20&c=MRMqc79PuLmQfxJ99fTfGqHL07EDHqHLWg0Tb4rPXQc=",
-                    username: "Jaik1019",
-                },
-                likes: 6,
-                created_at: "12-12-2022",
-                comments: [
-                    {
-                        id: 1,
-                        user: {
-                            image: "https://media.istockphoto.com/id/1309328823/photo/headshot-portrait-of-smiling-male-employee-in-office.jpg?b=1&s=170667a&w=0&k=20&c=MRMqc79PuLmQfxJ99fTfGqHL07EDHqHLWg0Tb4rPXQc=",
-                            username: "Jaik1013",
-                        },
-                        comment: "i like when money makes a difference but hate it when it makes u different 💯",
-                        isLiked: true
-                    },
-                    {
-                        id: 2,
-                        user: {
-                            image: "https://media.istockphoto.com/id/1309328823/photo/headshot-portrait-of-smiling-male-employee-in-office.jpg?b=1&s=170667a&w=0&k=20&c=MRMqc79PuLmQfxJ99fTfGqHL07EDHqHLWg0Tb4rPXQc=",
-                            username: "Ramesh",
-                        },
-                        comment: "Living your life to the fullest 😍❤️",
-                        isLiked: true
-                    }
-                ],
-                postLikes: []
-
-            }
-        ]
-    }
-    const dataCurrentUser = {
-        me: {
-            id: '6397eea298bd108ae779eed1',
-            username: "Jaik1019",
-            image: "https://media.istockphoto.com/id/1309328823/photo/headshot-portrait-of-smiling-male-employee-in-office.jpg?b=1&s=170667a&w=0&k=20&c=MRMqc79PuLmQfxJ99fTfGqHL07EDHqHLWg0Tb4rPXQc="
-        }
-    }
-
-    const [logout] = "Logged Out Successfully";
+    const [logout] = useMutation(LOGOUT);
     const client = useApolloClient();
 
-    // if (loadingCurrentUser || loading) {
-    //     return <Spinner />;
-    // }
+    if (loadingCurrentUser || loading) {
+        return <Spinner />;
+    }
 
-    // if (error || errorCurrentUser) {
-    //     return "Error...";
-    // }
+    if (error || errorCurrentUser) {
+        if (error) {
+            return "Error while loading feed"
+        }
+        return "Error... while calling user data";
+    }
 
     return (
         <main className="bg-zinc-50 grid grid-cols-3">
             <div className="md:px-12 lg:px-0 col-span-3 lg:col-span-2">
-                {data.feed.map((post) => (
+                <Stories />
+                {data.getAllPosts.map((post) => (
                     <Post
-                        key={post.id}
+                        key={post._id}
                         post={post}
-                        id={post.id}
-                        currentUserId={dataCurrentUser.me.id}
+                        id={post._id}
+                        currentUserId={dataCurrentUser.me._id}
                         caption={post.caption}
-                        image={post.image}
-                        username={post.user.username}
-                        userImage={post.user.image}
+                        image={post.imageURL}
+                        username={post.user.userName}
+                        userImage={post.user.profileImage}
                         likes={post.likes}
-                        created_time_ago={post.created_at}
+                        created_time_ago={post.createdAt}
                         comments={post.comments}
                         postLikes={post.postLikes}
                     />
@@ -133,32 +59,33 @@ export default function Home(props) {
             <div className="col-span-1 hidden lg:block">
                 <div className="fixed p-5 w-80">
                     <div className="flex flex-row">
-                        <a href="">
+                        <a href={`/${dataCurrentUser.me.userName}`}>
                             <img
                                 className="rounded-full"
-                                src={dataCurrentUser.me.image}
+                                src={dataCurrentUser.me.profileImage}
                                 width="100"
+                                alt="profile img"
                             />
                         </a>
                         <div className="w-72 pl-2 m-auto">
                             <div className="text-sm font-medium">
-                                <Link to={`/${dataCurrentUser.me.username}`}>
+                                <Link to={`/${dataCurrentUser.me.userName}`}>
                                     {dataCurrentUser.me.username}
                                 </Link>
                             </div>
                             <div className="text-gray-500 text-sm leading-4">
-                                {dataCurrentUser.me.name}
+                                {dataCurrentUser.me.fullName}
                             </div>
                         </div>
                         <div className="w-32 text-right m-auto">
-                            <a
+                            <span
                                 className="text-xs text-sky-500 font-bold cursor-pointer"
                                 onClick={() =>
                                     signOut(client, navigate, logout)
                                 }
                             >
                                 Sign Out
-                            </a>
+                            </span>
                         </div>
                     </div>
 

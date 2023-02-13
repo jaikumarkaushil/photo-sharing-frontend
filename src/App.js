@@ -15,6 +15,7 @@ import ModalSettings from "./components/ModalSettings";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ChangePassword from "./pages/ChangePassword";
+import Register from "./pages/Register";
 
 //Add all icons to the library so you can use it in your page
 library.add(fab, fas, far);
@@ -24,8 +25,9 @@ export default function App() {
 
     return (
         <>
-            <Routes>    
-                <Route path="/accounts/login" exact element={<Login/>} />
+            <Routes>
+                <Route path="/accounts/login" exact element={<Login />} />
+                <Route path="/accounts/register" exact element={<Register />} />
                 <Route
                     path="/"
                     exact

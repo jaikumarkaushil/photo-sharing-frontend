@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 const LIKE = gql`
-    mutation LikeMutation($post_id: ID!) {
-        addLike(idPost: $post_id) {
+    mutation addLike($idPost: ID!) {
+        addLike(idPost: $idPost) {
             message
             success
         }

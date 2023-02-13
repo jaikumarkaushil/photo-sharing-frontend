@@ -1,7 +1,10 @@
+import { useQuery } from "@apollo/client";
+import GET_CURRENT_USER from "./graphql/GET_CURRENT_USER";
+
 export const getImageUrl = (imagePath) => {
     const baseUrl = "http://localhost";
-
-    return `${baseUrl}/storage/${imagePath.replace("public/", "")}`;
+    // const commentreturn = `${baseUrl}/storage/${imagePath.replace("public/", "")}`
+    return imagePath;
 };
 
 export const signOut = async (client, navigate, logout) => {
@@ -23,7 +26,7 @@ export const isLikedByUser = (currentUserId, postLikes) => {
     return (
         postLikes.length &&
         postLikes.filter(
-            (postLike) => parseInt(postLike.user_id) === parseInt(currentUserId)
+            (postLike) => parseInt(postLike.idUser) === parseInt(currentUserId)
         ).length
     );
 };

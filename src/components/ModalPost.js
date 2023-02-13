@@ -20,10 +20,10 @@ export default function ModalPost(props) {
                                 <a href="" className="">
                                     <img
                                         className="rounded-full w-8 max-w-none inline"
-                                        src={post.user.image}
+                                        src={post.user.profileImage}
                                     />{" "}
                                     <span className="font-medium text-sm ml-2">
-                                        {post.user.username}
+                                        {post.user.userName}
                                     </span>
                                 </a>
                             </div>
@@ -39,13 +39,13 @@ export default function ModalPost(props) {
                                 <div>
                                     <img
                                         className="rounded-full w-8 inline max-w-none"
-                                        src={post.user.image}
+                                        src={post.user.profileImage}
                                     />
                                 </div>
                                 <div className="">
                                     <div className="px-3 text-sm">
                                         <span className="font-medium mr-2">
-                                            {post.user.username}
+                                            {post.user.userName}
                                         </span>
                                         {post.caption}
                                     </div>
@@ -56,31 +56,30 @@ export default function ModalPost(props) {
                                 post.comments.map((comment, index) => (
                                     <div
                                         className="flex flex-row p-3"
-                                        key={comment.id}
+                                        key={comment._id}
                                     >
                                         <div className="">
                                             <img
                                                 className="rounded-full w-8 inline max-w-none"
-                                                src={comment.user.image}
+                                                src={comment.userImage}
                                             />
                                         </div>
                                         <div className="grow relative">
                                             <div className="px-4 text-sm">
                                                 <span className="font-medium mr-2">
-                                                    {comment.user.username}
+                                                    {comment.userName}
                                                 </span>
                                                 {comment.comment}
                                             </div>
                                             <a
-                                                className={`absolute top-0 right-0 block float-right text-xs cursor-pointer ${
-                                                    comment.is_liked
-                                                        ? "text-red-600"
-                                                        : ""
-                                                }`}
+                                                className={`absolute top-0 right-0 block float-right text-xs cursor-pointer ${comment.isLiked
+                                                    ? "text-red-600"
+                                                    : ""
+                                                    }`}
                                             >
                                                 <FontAwesomeIcon
                                                     icon={[
-                                                        comment.is_liked
+                                                        comment.isLiked
                                                             ? "fas"
                                                             : "far",
                                                         "heart",
@@ -96,14 +95,13 @@ export default function ModalPost(props) {
                             <div className="header p-3 flex flex-row text-2xl w-full">
                                 <div className="flex-1 ">
                                     <a
-                                        className={`mr-3 cursor-pointer ${
-                                            isLikedByUser(
-                                                currentUserId,
-                                                post.postLikes
-                                            )
-                                                ? "text-red-600"
-                                                : ""
-                                        }`}
+                                        className={`mr-3 cursor-pointer ${isLikedByUser(
+                                            currentUserId,
+                                            post.postLikes
+                                        )
+                                            ? "text-red-600"
+                                            : ""
+                                            }`}
                                     >
                                         <FontAwesomeIcon
                                             icon={[

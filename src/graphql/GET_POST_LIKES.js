@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 const GET_POST_LIKES = gql`
-    query getPostLike($post_id: ID!) {
-        getPostLikes(idPost: $post_id) {
+    query getPostLike($idPost: ID!) {
+        getPostLikes(idPost: $idPost) {
             _id
             fullName
             userName

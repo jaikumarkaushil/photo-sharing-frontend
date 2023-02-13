@@ -17,7 +17,7 @@ export default function ProfileEdit(props) {
     const { loading, error, data } = useQuery(GET_CURRENT_USER, {
         onCompleted: (data) => {
             setName(data.me.name);
-            setUsername(data.me.username);
+            setUsername(data.me.userName);
             setBio(data.me.bio);
             setWebsite(data.me.website);
             setEmail(data.me.email);
@@ -84,13 +84,13 @@ export default function ProfileEdit(props) {
                     <a className="float-right mr-5" href="">
                         <img
                             className="rounded-full"
-                            src={data.me.image}
+                            src={data.me.profileImage}
                             width="40"
                         />
                     </a>
                 </div>
                 <div>
-                    <h1 className="text-2xl">{data.me.username}</h1>
+                    <h1 className="text-2xl">{data.me.userName}</h1>
                     <a href="#" className="text-sm text-sky-500 font-bold">
                         Change Profile Photo
                     </a>
