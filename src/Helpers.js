@@ -1,8 +1,8 @@
-import { useQuery } from "@apollo/client";
-import GET_CURRENT_USER from "./graphql/GET_CURRENT_USER";
+// import { useQuery } from "@apollo/client";
+// import GET_CURRENT_USER from "./graphql/GET_CURRENT_USER";
 
 export const getImageUrl = (imagePath) => {
-    const baseUrl = "http://localhost";
+    // const baseUrl = "http://localhost";
     // const commentreturn = `${baseUrl}/storage/${imagePath.replace("public/", "")}`
     return imagePath;
 };
